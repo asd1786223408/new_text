@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中转平台 - 页面导航</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 25px 80px rgba(102, 126, 234, 0.25);
+            --radius: 20px;
+            --spacing: 32px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--primary-gradient);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        header h1 {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .server-info {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-top: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .server-info code {
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .pages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 20px 0;
+        }
+
+        .page-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: var(--spacing);
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .page-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 35px 100px rgba(102, 126, 234, 0.35);
+        }
+
+        .page-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .page-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .page-name {
+            font-size: 22px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .page-path {
+            font-size: 13px;
+            color: #999;
+            font-family: 'Monaco', 'Consolas', monospace;
+            background: #f5f5f5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .page-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .page-status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-dev {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .add-card {
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px dashed rgba(255, 255, 255, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 200px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .add-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: white;
+        }
+
+        .add-icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+
+        .add-text {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        footer p {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 32px;
+            }
+            
+            .pages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 中转平台</h1>
+            <p>页面导航中心</p>
+            <div class="server-info">
+                <code>📡 http://139.196.15.208:15508</code>
+            </div>
+        </header>
+
+        <main class="pages-grid" id="pagesGrid">
+            <!-- 页面卡片将由 JavaScript 动态生成 -->
+        </main>
+
+        <footer>
+            <p>中转平台 v1.0.0 | 最后更新：2026-03-19</p>
+            <p>所有页面配置文件位于 ~/new_text/portal/config/pages.json</p>
+        </footer>
+    </div>
+
+    <script>
+        // 页面配置数据
+        const portalConfig = {
+            "portal": {
+                "name": "中转平台",
+                "server": "http://139.196.15.208:15508",
+                "version": "1.0.0",
+                "updated": "2026-03-19"
+            },
+            "pages": [
+                {
+                    "id": "helloworld",
+                    "name": "Hello World",
+                    "path": "/pages/helloworld/index.html",
+                    "description": "欢迎页面 - 测试用基础页面",
+                    "icon": "👋",
+                    "status": "active",
+                    "created": "2026-03-19"
+                }
+            ],
+            "settings": {
+                "theme": "gradient",
+                "showDescription": true,
+                "showStatus": true
+            }
+        };
+
+        // 渲染页面卡片
+        function renderPages() {
+            const grid = document.getElementById('pagesGrid');
+            const pages = portalConfig.pages || [];
+            
+            let html = pages.map(page => `
+                <a href="${page.path}" class="page-card" target="_blank">
+                    <span class="page-status status-${page.status}">${page.status === 'active' ? '✓ 已上线' : '⚙ 开发中'}</span>
+                    <div class="page-icon">${page.icon || '📄'}</div>
+                    <div class="page-name">${page.name}</div>
+                    <div class="page-path">${page.path}</div>
+                    <div class="page-description">${page.description || '暂无描述'}</div>
+                </a>
+            `).join('');
+
+            // 添加"新建页面"卡片
+            html += `
+                <div class="add-card" onclick="showAddPageGuide()">
+                    <div class="add-icon">➕</div>
+                    <div class="add-text">新建页面</div>
+                </div>
+            `;
+
+            grid.innerHTML = html;
+        }
+
+        // 显示新建页面指南
+        function showAddPageGuide() {
+            alert(`📝 新建页面指南：
+
+1. 在 ~/new_text/portal/pages/ 下创建新目录
+   例如：mkdir -p ~/new_text/portal/pages/mynewpage
+
+2. 在目录中创建 index.html
+
+3. 编辑 ~/new_text/portal/config/pages.json
+   在 pages 数组中添加新页面配置：
+   {
+     "id": "mynewpage",
+     "name": "我的新页面",
+     "path": "/pages/mynewpage/index.html",
+     "description": "页面描述",
+     "icon": "🎨",
+     "status": "active",
+     "created": "2026-03-19"
+   }
+
+4. 刷新本页面即可看到新页面卡片`);
+        }
+
+        // 初始化
+        renderPages();
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "id": "页面唯一标识",
+  "name": "页面名称",
+  "path": "/pages/页面目录/index.html",
+  "description": "页面描述",
+  "icon": "📄",
+  "status": "active",
+  "created": "2026-03-19",
+  "tags": [],
+  "author": ""
+}

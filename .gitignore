@@ -1,0 +1,19 @@
+# 敏感信息
+env.json
+*.txt
+
+# 依赖
+node_modules/
+__pycache__/
+*.pyc
+venv/
+
+# 日志
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Claude
+.claude/

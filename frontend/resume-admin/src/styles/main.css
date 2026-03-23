@@ -1,0 +1,210 @@
+/* Dify 风格设计系统 */
+:root {
+  /* 主色调 - 蓝紫色 */
+  --dify-primary: #5b5fc7;
+  --dify-primary-light: #818cf7;
+  --dify-primary-dark: #4338ca;
+  --dify-primary-bg: rgba(91, 95, 199, 0.04);
+
+  /* 中性色 */
+  --dify-bg: #ffffff;
+  --dify-bg-secondary: #f9fafb;
+  --dify-bg-tertiary: #f3f4f6;
+
+  --dify-text-primary: #111827;
+  --dify-text-secondary: #6b7280;
+  --dify-text-tertiary: #9ca3af;
+
+  --dify-border: #e5e7eb;
+  --dify-border-light: #f3f4f6;
+
+  /* 状态色 */
+  --dify-success: #10b981;
+  --dify-success-bg: rgba(16, 185, 129, 0.1);
+  --dify-warning: #f59e0b;
+  --dify-warning-bg: rgba(245, 158, 11, 0.1);
+  --dify-error: #ef4444;
+  --dify-error-bg: rgba(239, 68, 68, 0.1);
+  --dify-info: #3b82f6;
+  --dify-info-bg: rgba(59, 130, 246, 0.1);
+
+  /* 阴影 */
+  --dify-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --dify-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --dify-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --dify-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+
+  /* 圆角 */
+  --dify-radius-sm: 6px;
+  --dify-radius: 8px;
+  --dify-radius-lg: 12px;
+  --dify-radius-xl: 16px;
+
+  /* 间距 */
+  --dify-spacing-xs: 4px;
+  --dify-spacing-sm: 8px;
+  --dify-spacing: 12px;
+  --dify-spacing-md: 16px;
+  --dify-spacing-lg: 20px;
+  --dify-spacing-xl: 24px;
+  --dify-spacing-2xl: 32px;
+
+  /* 字体 */
+  --dify-font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --dify-font-mono: 'SF Mono', SFMono-Regular, Consolas, 'Liberation Mono', Menlo, monospace;
+}
+
+/* 暗色主题 */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dify-bg: #1a1a1a;
+    --dify-bg-secondary: #242424;
+    --dify-bg-tertiary: #2a2a2a;
+
+    --dify-text-primary: #f9fafb;
+    --dify-text-secondary: #d1d5db;
+    --dify-text-tertiary: #9ca3af;
+
+    --dify-border: #374151;
+    --dify-border-light: #2a2a2a;
+
+    --dify-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --dify-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.3);
+    --dify-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+    --dify-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--dify-font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--dify-text-primary);
+  background-color: var(--dify-bg-secondary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* 通用工具类 */
+.dify-card {
+  background: var(--dify-bg);
+  border-radius: var(--dify-radius-lg);
+  box-shadow: var(--dify-shadow-sm);
+  border: 1px solid var(--dify-border);
+  padding: var(--dify-spacing-lg);
+}
+
+.dify-card:hover {
+  box-shadow: var(--dify-shadow-md);
+  transition: box-shadow 0.2s ease;
+}
+
+.dify-btn-primary {
+  background: var(--dify-primary);
+  color: white;
+  border: none;
+  border-radius: var(--dify-radius);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dify-btn-primary:hover {
+  background: var(--dify-primary-dark);
+  box-shadow: var(--dify-shadow);
+}
+
+.dify-btn-secondary {
+  background: var(--dify-bg);
+  color: var(--dify-text-secondary);
+  border: 1px solid var(--dify-border);
+  border-radius: var(--dify-radius);
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dify-btn-secondary:hover {
+  border-color: var(--dify-primary);
+  color: var(--dify-primary);
+}
+
+.dify-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--dify-border);
+  border-radius: var(--dify-radius);
+  font-size: 14px;
+  color: var(--dify-text-primary);
+  background: var(--dify-bg);
+  transition: all 0.2s ease;
+}
+
+.dify-input:focus {
+  outline: none;
+  border-color: var(--dify-primary);
+  box-shadow: 0 0 0 3px var(--dify-primary-bg);
+}
+
+.dify-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.dify-badge-success {
+  background: var(--dify-success-bg);
+  color: var(--dify-success);
+}
+
+.dify-badge-warning {
+  background: var(--dify-warning-bg);
+  color: var(--dify-warning);
+}
+
+.dify-badge-error {
+  background: var(--dify-error-bg);
+  color: var(--dify-error);
+}
+
+.dify-badge-info {
+  background: var(--dify-info-bg);
+  color: var(--dify-info);
+}
+
+/* 滚动条美化 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dify-bg-tertiary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--dify-border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dify-text-tertiary);
+}

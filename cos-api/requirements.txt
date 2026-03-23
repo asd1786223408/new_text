@@ -1,0 +1,2 @@
+Flask==2.0.3
+cos-python-sdk-v5==1.9.30

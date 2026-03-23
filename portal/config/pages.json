@@ -1,0 +1,24 @@
+{
+  "portal": {
+    "name": "中转平台",
+    "server": "http://139.196.15.208:15508",
+    "version": "1.0.0",
+    "updated": "2026-03-19"
+  },
+  "pages": [
+    {
+      "id": "helloworld",
+      "name": "Hello World",
+      "path": "/pages/helloworld/index.html",
+      "description": "欢迎页面",
+      "icon": "👋",
+      "status": "active",
+      "created": "2026-03-19"
+    }
+  ],
+  "settings": {
+    "theme": "gradient",
+    "showDescription": true,
+    "showStatus": true
+  }
+}
