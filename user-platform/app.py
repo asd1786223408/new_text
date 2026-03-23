@@ -18,6 +18,7 @@ from routes.roles import roles_bp
 from routes.permissions import permissions_bp
 from routes.resumes import resumes_bp
 from routes.positions import positions_bp
+from routes.demands import demands_bp
 
 # 创建 Flask 应用
 app = Flask(__name__)
@@ -64,6 +65,7 @@ app.register_blueprint(roles_bp)
 app.register_blueprint(permissions_bp)
 app.register_blueprint(resumes_bp)
 app.register_blueprint(positions_bp)
+app.register_blueprint(demands_bp)
 
 # 配置日志
 logging.basicConfig(
@@ -92,7 +94,8 @@ def api_index():
             'roles': '/api/roles',
             'permissions': '/api/permissions',
             'resumes': '/api/resumes',
-            'positions': '/api/positions'
+            'positions': '/api/positions',
+            'demands': '/api/demands'
         }
     }
 

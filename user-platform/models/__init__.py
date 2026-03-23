@@ -5,5 +5,6 @@ from .role import Role
 from .permission import Permission
 from .resume import Resume
 from .position import Position
+from .position_demand import PositionDemand
 
-__all__ = ['User', 'Department', 'Role', 'Permission', 'Resume', 'Position']
+__all__ = ['User', 'Department', 'Role', 'Permission', 'Resume', 'Position', 'PositionDemand']

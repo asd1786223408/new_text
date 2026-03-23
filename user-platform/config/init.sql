@@ -121,6 +121,38 @@ CREATE TABLE IF NOT EXISTS positions (
     INDEX idx_created (created_at)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位表';
 
+-- 岗位需求发布表（用户可发布自己的岗位需求）
+CREATE TABLE IF NOT EXISTS position_demands (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(200) NOT NULL COMMENT '需求标题',
+    description TEXT COMMENT '岗位描述',
+    requirements TEXT COMMENT '任职要求',
+    custom_field TEXT COMMENT '自定义字段（用户自定义内容）',
+    salary_min INT COMMENT '最低薪资',
+    salary_max INT COMMENT '最高薪资',
+    work_location VARCHAR(100) COMMENT '工作地点',
+    experience_years VARCHAR(50) COMMENT '经验要求（如：3-5 年）',
+    education_required VARCHAR(50) COMMENT '学历要求（专科/本科/硕士/博士）',
+    skills_required JSON COMMENT '技能要求列表',
+    department VARCHAR(100) COMMENT '所属部门',
+    headcount INT DEFAULT 1 COMMENT '招聘人数',
+    job_type VARCHAR(20) DEFAULT 'full_time' COMMENT '工作性质：full_time-全职，part_time-兼职，intern-实习',
+    status TINYINT DEFAULT 0 COMMENT '状态：0-待审核，1-已发布，2-已关闭，3-已拒绝',
+    contact_info VARCHAR(255) COMMENT '联系方式',
+    ai_analysis JSON COMMENT 'AI 分析报告',
+    ai_score INT COMMENT 'AI 打分 0-100',
+    ai_suggestions JSON COMMENT 'AI 优化建议',
+    analyzed_at DATETIME COMMENT '分析时间',
+    published_at DATETIME COMMENT '发布时间',
+    user_id BIGINT COMMENT '发布人 ID',
+    username VARCHAR(50) COMMENT '发布人用户名',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_status (status),
+    INDEX idx_user (user_id),
+    INDEX idx_created (created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='岗位需求发布表';
+
 -- 简历附件表
 CREATE TABLE IF NOT EXISTS resume_attachments (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -171,7 +203,12 @@ INSERT INTO permissions (name, display_name, module, action, sort) VALUES
 ('position:create', '创建岗位', 'position', 'create', 17),
 ('position:read', '查看岗位', 'position', 'read', 18),
 ('position:update', '编辑岗位', 'position', 'update', 19),
-('position:delete', '删除岗位', 'position', 'delete', 20);
+('position:delete', '删除岗位', 'position', 'delete', 20),
+('demand:create', '发布岗位需求', 'demand', 'create', 21),
+('demand:read', '查看岗位需求', 'demand', 'read', 22),
+('demand:update', '编辑岗位需求', 'demand', 'update', 23),
+('demand:delete', '删除岗位需求', 'demand', 'delete', 24),
+('demand:analyze', '分析岗位需求', 'demand', 'analyze', 25);
 
 -- 默认角色
 INSERT INTO roles (name, display_name, description, permissions, status) VALUES

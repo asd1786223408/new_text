@@ -786,6 +786,243 @@ Content-Type: application/json
 
 ---
 
+## 岗位需求发布模块 `/api/demands`
+
+### 1. 获取岗位需求列表
+
+```http
+GET /api/demands?status=1&keyword=Java&page=1&page_size=20&job_type=full_time
+```
+
+**参数说明**
+| 参数 | 类型 | 说明 |
+|------|------|------|
+| status | int | 状态：0-待审核，1-已发布，2-已关闭，3-已拒绝 |
+| keyword | string | 搜索关键词 |
+| job_type | string | 工作性质：full_time-全职，part_time-兼职，intern-实习 |
+| page | int | 页码 |
+| page_size | int | 每页数量 |
+
+**响应示例**
+```json
+{
+  "code": 0,
+  "message": "操作成功",
+  "data": {
+    "total": 10,
+    "page": 1,
+    "page_size": 20,
+    "total_pages": 1,
+    "demands": [
+      {
+        "id": 1,
+        "title": "Java 开发工程师",
+        "description": "负责公司后端开发",
+        "requirements": "3 年以上 Java 经验",
+        "custom_field": {"special_require": "需要接受加班"},
+        "salary_min": 15000,
+        "salary_max": 25000,
+        "work_location": "北京",
+        "experience_years": "3-5 年",
+        "education_required": "本科",
+        "department": "技术部",
+        "headcount": 2,
+        "job_type": "full_time",
+        "contact_info": "hr@example.com",
+        "status": 1,
+        "ai_score": 85,
+        "user_id": 1,
+        "username": "admin",
+        "published_at": "2026-03-23T10:00:00",
+        "created_at": "2026-03-23T10:00:00"
+      }
+    ]
+  }
+}
+```
+
+---
+
+### 2. 获取岗位需求详情
+
+```http
+GET /api/demands/<需求 ID>
+```
+
+**响应示例**
+```json
+{
+  "code": 0,
+  "message": "操作成功",
+  "data": {
+    "id": 1,
+    "title": "Java 开发工程师",
+    "description": "负责公司后端开发",
+    "requirements": "3 年以上 Java 经验，熟悉 Spring Boot",
+    "custom_field": {"special_require": "需要接受加班"},
+    "salary_min": 15000,
+    "salary_max": 25000,
+    "work_location": "北京",
+    "experience_years": "3-5 年",
+    "education_required": "本科",
+    "skills_required": ["Java", "Spring Boot", "MySQL"],
+    "department": "技术部",
+    "headcount": 2,
+    "job_type": "full_time",
+    "contact_info": "hr@example.com",
+    "status": 1,
+    "ai_score": 85,
+    "ai_analysis": {
+      "title_clarity": "岗位名称清晰明确",
+      "description_quality": "岗位描述较为完整",
+      "requirements_reasonable": "任职要求合理，与岗位匹配",
+      "salary_competitive": "薪资范围具有市场竞争力",
+      "overall_comment": "整体岗位需求描述清晰，要求合理"
+    },
+    "ai_suggestions": [
+      "建议 1：可以补充团队规模介绍",
+      "建议 2：建议增加福利待遇说明"
+    ],
+    "user_id": 1,
+    "username": "admin",
+    "created_at": "2026-03-23T10:00:00"
+  }
+}
+```
+
+---
+
+### 3. 发布岗位需求
+
+```http
+POST /api/demands
+Content-Type: application/json
+```
+
+**请求参数**
+```json
+{
+  "title": "Java 开发工程师",
+  "description": "负责公司后端开发",
+  "requirements": "3 年以上 Java 经验，熟悉 Spring Boot",
+  "custom_field": {"special_require": "需要接受加班", "other": "其他自定义内容"},
+  "salary_min": 15000,
+  "salary_max": 25000,
+  "work_location": "北京",
+  "experience_years": "3-5 年",
+  "education_required": "本科",
+  "skills_required": ["Java", "Spring Boot", "MySQL"],
+  "department": "技术部",
+  "headcount": 2,
+  "job_type": "full_time",
+  "contact_info": "hr@example.com"
+}
+```
+
+**响应示例**
+```json
+{
+  "code": 0,
+  "message": "需求发布成功，请等待审核",
+  "data": {
+    "demand_id": 1
+  }
+}
+```
+
+---
+
+### 4. 更新岗位需求
+
+```http
+PUT /api/demands/<需求 ID>
+Content-Type: application/json
+```
+
+**说明**: 只能更新自己发布的、状态为待审核的需求
+
+---
+
+### 5. 删除岗位需求
+
+```http
+DELETE /api/demands/<需求 ID>
+```
+
+**说明**: 只能删除自己发布的需求
+
+---
+
+### 6. AI 分析岗位需求
+
+```http
+POST /api/demands/<需求 ID>/analyze
+```
+
+**说明**: 调用 AI 分析岗位需求的合理性，给出评分和优化建议
+
+**响应示例**
+```json
+{
+  "code": 0,
+  "message": "AI 分析完成",
+  "data": {
+    "id": 1,
+    "score": 85,
+    "analysis": {
+      "title_clarity": "岗位名称清晰明确",
+      "description_quality": "岗位描述较为完整",
+      "requirements_reasonable": "任职要求合理，与岗位匹配",
+      "salary_competitive": "薪资范围具有市场竞争力",
+      "overall_comment": "整体岗位需求描述清晰，要求合理"
+    },
+    "suggestions": [
+      "建议 1：可以补充团队规模介绍",
+      "建议 2：建议增加福利待遇说明",
+      "建议 3：建议明确晋升空间"
+    ]
+  }
+}
+```
+
+---
+
+### 7. 关闭岗位需求
+
+```http
+POST /api/demands/<需求 ID>/close
+```
+
+**说明**: 发布人可以关闭自己发布的岗位需求
+
+---
+
+### 8. 审核通过岗位需求（管理员）
+
+```http
+POST /api/demands/<需求 ID>/approve
+```
+
+**说明**: 管理员审核通过后，需求状态变为已发布
+
+---
+
+### 9. 拒绝岗位需求（管理员）
+
+```http
+POST /api/demands/<需求 ID>/reject
+Content-Type: application/json
+```
+
+**请求参数**
+```json
+{
+  "reason": "岗位描述不清晰"
+}
+```
+
+---
+
 ## 错误码说明
 
 | Code | HTTP 状态码 | 说明 |
